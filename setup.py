@@ -36,9 +36,10 @@ if os.path.exists("MANIFEST"):
     os.unlink("MANIFEST")
 
 
-class BinaryDistribution(Distribution):
-    def is_pure(self):
-        return False
+INSTALL_REQUIRES = []
+with open("requirements.txt", encoding="utf-8") as req:
+    for line in req.readlines():
+        INSTALL_REQUIRES.append(line.split("#")[0].strip())
 
 
 setup(
@@ -48,4 +49,5 @@ setup(
     include_package_data=False,  # True will install all files in repo
     zip_safe=False,
     python_requires=">=3.8",
+    install_requires=INSTALL_REQUIRES,
 )
