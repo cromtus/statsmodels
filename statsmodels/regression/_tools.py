@@ -92,7 +92,10 @@ class _MinimalWLS:
         statsmodels.regression.linear_model.WLS
         """
         if method == 'pinv':
-            pinv_wexog = np.linalg.pinv(self.wexog)
+            reg = np.eye(self.wexog.shape[1]) * 0.1 * len(self.wexog)
+            reg[0, 0] = 0
+            pinv_wexog = np.linalg.inv(self.wexog.T @ self.wexog + reg) @ self.wexog.T
+            # pinv_wexog = np.linalg.pinv(self.wexog)
             params = pinv_wexog.dot(self.wendog)
         elif method == 'qr':
             Q, R = np.linalg.qr(self.wexog)

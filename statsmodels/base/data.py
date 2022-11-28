@@ -4,7 +4,7 @@ results, and doing data cleaning
 """
 from __future__ import annotations
 
-from statsmodels.compat.python import lmap
+lmap = map
 
 from functools import reduce
 
